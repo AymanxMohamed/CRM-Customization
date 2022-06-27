@@ -37,7 +37,7 @@ function getUserRoles() {
     
 
     // This will return the key of the previous object
-    Object.keys(userRolesArray).forEach(key => {
+    Object.keys(userRolesObject).forEach(key => {
         userRoles.push(userRolesObject[key].name);
     }); 
 
