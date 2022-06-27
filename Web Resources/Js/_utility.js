@@ -1,23 +1,6 @@
 // Date 27/06/2022
-// Title: Approval Cycle Web Resource
-// Solution: ODH_Adding_Approving_Cycle_To_Bookings
-// Entity: Bookable Resource Booking
-// Description: This Script is part of the approval cycle handling and it's main goal is to handle the change of the change of the approval status according to the logged in user roles
-
-
-function handleApprovalStatusChange() {
-    let userRoles = getUserRoles();
-
-    let approvalStatusField = Xrm.Page.getAttribute("odh_approvalstatus");
-    
-    // The Resources Supervisor role is the role of the field resources supervisor and it hasn't been created yet
-    if (userRoles.includes(...['System Administrator', 'Resources Supervisor']))
-        approvalStatusField.setValue(753_210_001); //  Approved
-    else
-        approvalStatusField.setValue(753_210_000); //  Pending Approval
-}
-
-
+// Title: Utility
+// Description: This Script is Includes A Collection of the function that maybe used during development multible scripts
 
 // This function retursn an array of all user Roles Like This:  
 // ['CCI admin', 'System Administrator', 'IoT - Administrator']
