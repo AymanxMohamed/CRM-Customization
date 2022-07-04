@@ -3,8 +3,13 @@ using Microsoft.Xrm.Sdk.Workflow;
 using System;
 using System.Activities;
 
-namespace ODH_Integrations
+namespace ODH.Integrations.Plugins.Helper
 {
+    /// <summary>
+    /// This Utility Class Has the Standared Methods that are used In Each Plugin Or Work flow
+    /// Author: Ayman Mohamed
+    /// Date: 2022-06-29
+    /// </summary>
     public static class Utility
     {
         /// <summary>

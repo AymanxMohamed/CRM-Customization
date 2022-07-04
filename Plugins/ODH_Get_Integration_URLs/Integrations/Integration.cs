@@ -2,18 +2,17 @@
 using Microsoft.Xrm.Sdk.Query;
 using System;
 
-namespace ODH_Integrations.Integrations
+namespace ODH.Integrations.Plugins.Integrations
 {
+    /// <summary>
+    /// An Abstract Class That Main Goal is to InitializeThe Integration Model
+    /// Author: Ayman Mohamed
+    /// Date: 2022-07-04
+    /// </summary>
     public abstract class Integration : IIntegration
     {
-        public string IntegrationName { get; set; }
-        public Guid ConfigurationRecordId { get; set; }
-        public ColumnSet ColumnSet { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string BaseUrl { get; set; }
-
-        public Integration() => ConfigurationRecordId = new Guid("9449B9BB-96FB-EC11-82E5-000D3ADCA46C");
+        public IntegrationModel IntegrationModel { get; set; }
+        public Integration() => IntegrationModel.ConfigurationRecordId = new Guid("9449B9BB-96FB-EC11-82E5-000D3ADCA46C");
 
 
         /// <summary>
@@ -22,14 +21,18 @@ namespace ODH_Integrations.Integrations
         /// <param name="service"></param>
         protected void InitializeIntegrationData(IOrganizationService service)
         {
-            ColumnSet = new ColumnSet($"odh_{IntegrationName}_username", $"odh_{IntegrationName}_password", $"odh_{IntegrationName}_baseurl");
-            var integrationData =  service.Retrieve("odh_configurations", ConfigurationRecordId, ColumnSet);
+            IntegrationModel.ColumnSet = new ColumnSet($"odh_{IntegrationModel.IntegrationName}_username", $"odh_{IntegrationModel.IntegrationName}_password", $"odh_{IntegrationModel.IntegrationName}_baseurl");
 
-            Username = (string) integrationData[$"odh_{IntegrationName}_username"];
-            Password = (string) integrationData[$"odh_{IntegrationName}_password"];
-            BaseUrl = (string) integrationData[$"odh_{IntegrationName}_baseurl"];
+            var integrationData =  service.Retrieve("odh_configurations", IntegrationModel.ConfigurationRecordId, IntegrationModel.ColumnSet);
+
+            IntegrationModel.Username = (string) integrationData[$"odh_{IntegrationModel.IntegrationName}_username"];
+            IntegrationModel.Password = (string) integrationData[$"odh_{IntegrationModel.IntegrationName}_password"];
+            IntegrationModel.BaseUrl = (string) integrationData[$"odh_{IntegrationModel.IntegrationName}_baseurl"];
         }
 
         public abstract void TestIntegration(IOrganizationService service);
+
+        public abstract void Post(IOrganizationService service);
+
     }
 }

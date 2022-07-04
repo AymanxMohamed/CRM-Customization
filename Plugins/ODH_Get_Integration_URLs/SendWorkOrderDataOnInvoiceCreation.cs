@@ -1,12 +1,16 @@
 ﻿using Microsoft.Xrm.Sdk;
-using ODH_Integrations.Integrations;
+using ODH.Integrations.Plugins.Helper;
+using ODH.Integrations.Plugins.Integrations;
 using System;
 
-using static ODH_Integrations.Utility;
-
-namespace ODH_Integrations
+namespace ODH.Integrations.Plugins
 {
-    public class ODHGetIntegrationURLs : IPlugin
+    /// <summary>
+    /// This Plugin Supposed To Be Able to send APi Requests According to the Vendor
+    /// Author: Ayman Mohamed
+    /// Date: 2022-07-04
+    /// </summary>
+    public class SendWorkOrderDataOnInvoiceCreation : IPlugin
     { 
         private Entity _entity;
         private IOrganizationService _service;
@@ -16,14 +20,13 @@ namespace ODH_Integrations
 
         public void Execute(IServiceProvider serviceProvider)
         {
-            #region ---- Standared Code -----
-            InitializeFields(serviceProvider, ref _entity, ref _context, ref _service, ref _tracingService);
-            #endregion
+            Utility.InitializeFields(serviceProvider, ref _entity, ref _context, ref _service, ref _tracingService);
 
             if (_entity.LogicalName == "contact")
                 integration = new Raya(_service);
             else return;
             integration.TestIntegration(_service);
+            integration.Post(_service);
         }
     }
 }
