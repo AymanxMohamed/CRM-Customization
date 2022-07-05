@@ -9,7 +9,6 @@ namespace ODH.Integrations.Plugins.Integrations
     /// </summary>
     public interface IIntegration
     {
-        void TestIntegration(IOrganizationService service);
         void Post(IOrganizationService service);
     }
 }

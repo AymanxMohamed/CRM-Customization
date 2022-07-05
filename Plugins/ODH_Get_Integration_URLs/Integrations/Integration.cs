@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using System;
+using System.Net.Http;
 
 namespace ODH.Integrations.Plugins.Integrations
 {
@@ -11,9 +12,34 @@ namespace ODH.Integrations.Plugins.Integrations
     /// </summary>
     public abstract class Integration : IIntegration
     {
+        public ITracingService TracingService { get; set; }
         public IntegrationModel IntegrationModel { get; set; }
-        public Integration() => IntegrationModel.ConfigurationRecordId = new Guid("9449B9BB-96FB-EC11-82E5-000D3ADCA46C");
+        public Integration(ITracingService tracingService)
+        {
+            TracingService = tracingService;
+            TracingService.Trace("Integration Line 19");
+            IntegrationModel = new IntegrationModel
+            {
+                Client = new HttpClient(),
+                ConfigurationRecordId = new Guid("9449B9BB-96FB-EC11-82E5-000D3ADCA46C")
+            };
+            TracingService.Trace("Integration Line 21");
+        }
 
+        public void TestIntegration(IOrganizationService service, string whatToTest)
+        {
+            TracingService.Trace("Raya Line 19");
+            var task = new Entity("task");
+
+            task["subject"] = "ODH.Itegrations.Plugins.SendWOrkOrderDataOnInvoiceCreation";
+            task["description"] = $"User Name: {IntegrationModel.Username}.\n" +
+                $"Password: {IntegrationModel.Password}.\n" +
+                $"Base Url: {IntegrationModel.BaseUrl}.\n" +
+                $"Test Text: {whatToTest}";
+
+            service.Create(task);
+            TracingService.Trace("Raya Line 55");
+        }
 
         /// <summary>
         /// This Method Goal is To Initialize The Integration Data.
@@ -21,7 +47,9 @@ namespace ODH.Integrations.Plugins.Integrations
         /// <param name="service"></param>
         protected void InitializeIntegrationData(IOrganizationService service)
         {
+            TracingService.Trace("Integration Line 32");
             IntegrationModel.ColumnSet = new ColumnSet($"odh_{IntegrationModel.IntegrationName}_username", $"odh_{IntegrationModel.IntegrationName}_password", $"odh_{IntegrationModel.IntegrationName}_baseurl");
+            TracingService.Trace("Integration Line 33");
 
             var integrationData =  service.Retrieve("odh_configurations", IntegrationModel.ConfigurationRecordId, IntegrationModel.ColumnSet);
 
@@ -30,9 +58,6 @@ namespace ODH.Integrations.Plugins.Integrations
             IntegrationModel.BaseUrl = (string) integrationData[$"odh_{IntegrationModel.IntegrationName}_baseurl"];
         }
 
-        public abstract void TestIntegration(IOrganizationService service);
-
         public abstract void Post(IOrganizationService service);
-
     }
 }

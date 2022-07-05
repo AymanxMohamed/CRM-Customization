@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xrm.Sdk.Query;
 using System;
+using System.Net.Http;
 
 namespace ODH.Integrations.Plugins.Integrations
 {
@@ -10,8 +11,9 @@ namespace ODH.Integrations.Plugins.Integrations
     /// </summary>
     public class IntegrationModel
     {
-        public string IntegrationName { get; set; }
         public Guid ConfigurationRecordId { get; set; }
+        public HttpClient Client { get; set; }
+        public string IntegrationName { get; set; }
         public ColumnSet ColumnSet { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }

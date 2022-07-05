@@ -21,12 +21,17 @@ namespace ODH.Integrations.Plugins
         public void Execute(IServiceProvider serviceProvider)
         {
             Utility.InitializeFields(serviceProvider, ref _entity, ref _context, ref _service, ref _tracingService);
-
+            _tracingService.Trace("line 24");
             if (_entity.LogicalName == "contact")
-                integration = new Raya(_service);
+            {
+                _tracingService.Trace("Execute Method: line 27");
+                integration = new Raya(_service, _tracingService);
+                _tracingService.Trace("Execute Method: line 29");
+            }
             else return;
-            integration.TestIntegration(_service);
+            _tracingService.Trace("Execute Method: line 32");
             integration.Post(_service);
+            _tracingService.Trace("End oF the Plugin Execution");
         }
     }
 }
