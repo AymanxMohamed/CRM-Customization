@@ -21,7 +21,6 @@ namespace ODH.Integrations.Plugins
         public void Execute(IServiceProvider serviceProvider)
         {
             Utility.InitializeFields(serviceProvider, ref _entity, ref _context, ref _service, ref _tracingService);
-            _tracingService.Trace("line 24");
             if (_entity.LogicalName == "contact")
                 integration = new Raya(_service, _tracingService);
             else return;
