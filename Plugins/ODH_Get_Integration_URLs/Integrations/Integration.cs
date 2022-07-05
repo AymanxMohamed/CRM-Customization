@@ -17,19 +17,16 @@ namespace ODH.Integrations.Plugins.Integrations
         public Integration(Entity targetEntity, ITracingService tracingService)
         {
             TracingService = tracingService;
-            TracingService.Trace("Integration Line 19");
             IntegrationModel = new IntegrationModel
             {
                 Client = new HttpClient(),
                 ConfigurationRecordId = new Guid("9449B9BB-96FB-EC11-82E5-000D3ADCA46C"),
                 TargetEntity = targetEntity
             };
-            TracingService.Trace("Integration Line 21");
         }
 
         public void TestIntegration(IOrganizationService service, string whatToTest)
         {
-            TracingService.Trace("Raya Line 19");
             var task = new Entity("task");
 
             task["subject"] = "ODH.Itegrations.Plugins.SendWOrkOrderDataOnInvoiceCreation";
@@ -39,7 +36,6 @@ namespace ODH.Integrations.Plugins.Integrations
                 $"Test Text: {whatToTest}";
 
             service.Create(task);
-            TracingService.Trace("Raya Line 55");
         }
 
         /// <summary>
@@ -48,9 +44,7 @@ namespace ODH.Integrations.Plugins.Integrations
         /// <param name="service"></param>
         protected void InitializeIntegrationData(IOrganizationService service)
         {
-            TracingService.Trace("Integration Line 32");
             IntegrationModel.ColumnSet = new ColumnSet($"odh_{IntegrationModel.IntegrationName}_username", $"odh_{IntegrationModel.IntegrationName}_password", $"odh_{IntegrationModel.IntegrationName}_baseurl");
-            TracingService.Trace("Integration Line 33");
 
             Entity integrationData =  service.Retrieve("odh_configurations", IntegrationModel.ConfigurationRecordId, IntegrationModel.ColumnSet);
 

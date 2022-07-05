@@ -69,7 +69,6 @@ namespace ODH.Integrations.Plugins.Integrations
             string workOrderNumber_PropertyName = $"{workOrderNumber}_{propertyName}";
 
             return $"{IntegrationModel.BaseUrl}CRM_INTEG_WORK_ORDER_NUMBE_LOV/1.0/crmworkorderNumber/{quoteNumber}/{workOrderNumber_PropertyName}/Y/CREATE";
-           }
-
         }
     }
+}
