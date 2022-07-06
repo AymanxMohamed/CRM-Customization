@@ -17,12 +17,12 @@ namespace ODH.Integrations.Plugins.Integrations
         public Integration(Entity targetEntity, ITracingService tracingService)
         {
             TracingService = tracingService;
-            IntegrationModel.TargetEntity = targetEntity;
             TracingService.Trace("Integration Line 19");
             IntegrationModel = new IntegrationModel
             {
                 Client = new HttpClient(),
-                ConfigurationRecordId = new Guid("9449B9BB-96FB-EC11-82E5-000D3ADCA46C")
+                ConfigurationRecordId = new Guid("9449B9BB-96FB-EC11-82E5-000D3ADCA46C"),
+                TargetEntity = targetEntity
             };
             TracingService.Trace("Integration Line 21");
         }
@@ -52,12 +52,15 @@ namespace ODH.Integrations.Plugins.Integrations
             IntegrationModel.ColumnSet = new ColumnSet($"odh_{IntegrationModel.IntegrationName}_username", $"odh_{IntegrationModel.IntegrationName}_password", $"odh_{IntegrationModel.IntegrationName}_baseurl");
             TracingService.Trace("Integration Line 33");
 
-            var integrationData =  service.Retrieve("odh_configurations", IntegrationModel.ConfigurationRecordId, IntegrationModel.ColumnSet);
+            Entity integrationData =  service.Retrieve("odh_configurations", IntegrationModel.ConfigurationRecordId, IntegrationModel.ColumnSet);
 
             IntegrationModel.Username = (string) integrationData[$"odh_{IntegrationModel.IntegrationName}_username"];
             IntegrationModel.Password = (string) integrationData[$"odh_{IntegrationModel.IntegrationName}_password"];
             IntegrationModel.BaseUrl = (string) integrationData[$"odh_{IntegrationModel.IntegrationName}_baseurl"];
         }
+
+        protected Entity GetEntity(IOrganizationService service, string entityName, Guid entityId, ColumnSet columnSet) =>
+            service.Retrieve(entityName, entityId, columnSet);
 
         public abstract void Post(IOrganizationService service);
     }
