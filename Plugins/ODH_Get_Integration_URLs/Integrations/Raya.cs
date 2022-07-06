@@ -16,7 +16,7 @@ namespace ODH.Integrations.Plugins.Integrations
     /// </summary>
     public class Raya : Integration
     {
-        public Raya(IOrganizationService service, ITracingService tracingService) : base(tracingService)
+        public Raya(IOrganizationService service, Entity targetEntity,ITracingService tracingService) : base(targetEntity, tracingService)
         {
             TracingService.Trace("Raya Line 16");
             IntegrationModel.IntegrationName = "raya";
@@ -30,18 +30,12 @@ namespace ODH.Integrations.Plugins.Integrations
             // : https://odh-lr10okka6dtgld.integration.ocp.oraclecloud.com/ic/api/integration/v1/flows/rest/CRM_INTEG_WORK_ORD
             //ER_NUMBE_LOV / 1.0 / crmworkorderNumber /{ workordernumberValue}/{ workorderDescription}/{
             //   EnableFlag}/{ CREATE_UPDATE_DELETE}
-            int workOrderNumberValue =203456;
+            int workOrderNumberValue = 203456;
             string workOrderDescription = "Test_DL";
             string enableFlag = "Y";
             string createUpdateDelete = "CREATE";
 
             TracingService.Trace($"Post Method Line 35 {workOrderDescription}");
-            var values = new Dictionary<string, string>
-            {
-                { "thing1", "hello" },
-                { "thing2", "world" }
-            };
-            TracingService.Trace($"Vales: {values}, post Method Line 41");
             string url = $"{IntegrationModel.BaseUrl}CRM_INTEG_WORK_ORDER_NUMBE_LOV/1.0/crmworkorderNumber/{workOrderNumberValue}/{workOrderDescription}/{enableFlag}/{createUpdateDelete}";
             try
             {

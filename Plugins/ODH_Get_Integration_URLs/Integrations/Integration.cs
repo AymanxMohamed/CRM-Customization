@@ -14,9 +14,10 @@ namespace ODH.Integrations.Plugins.Integrations
     {
         public ITracingService TracingService { get; set; }
         public IntegrationModel IntegrationModel { get; set; }
-        public Integration(ITracingService tracingService)
+        public Integration(Entity targetEntity, ITracingService tracingService)
         {
             TracingService = tracingService;
+            IntegrationModel.TargetEntity = targetEntity;
             TracingService.Trace("Integration Line 19");
             IntegrationModel = new IntegrationModel
             {

@@ -25,7 +25,7 @@ namespace ODH.Integrations.Plugins
             if (_entity.LogicalName == "contact")
             {
                 _tracingService.Trace("Execute Method: line 27");
-                integration = new Raya(_service, _tracingService);
+                integration = new Raya(_service, _entity,_tracingService);
                 _tracingService.Trace("Execute Method: line 29");
             }
             else return;
