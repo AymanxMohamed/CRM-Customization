@@ -78,5 +78,11 @@ namespace ODH.Integrations.Plugins.Helper
         }
 
         public static bool IsRegisteredCorrectly(ref Entity currentEntity, string entityLogicalName) => currentEntity.LogicalName != entityLogicalName;
+
+        public static void PrintEntityAttributes(Entity entity, ITracingService tracingService) 
+        {
+            foreach (var attribute in entity.Attributes)
+                tracingService.Trace($"Attribute Key: {attribute.Key}, Attribute Value: {attribute.Value}");
+        }
     }
 }

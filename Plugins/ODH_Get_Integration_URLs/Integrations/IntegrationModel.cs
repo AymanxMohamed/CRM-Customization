@@ -1,4 +1,5 @@
-﻿using Microsoft.Xrm.Sdk.Query;
+﻿using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 using System;
 using System.Net.Http;
 
@@ -13,6 +14,7 @@ namespace ODH.Integrations.Plugins.Integrations
     {
         public Guid ConfigurationRecordId { get; set; }
         public HttpClient Client { get; set; }
+        public Entity TargetEntity { get; set; }
         public string IntegrationName { get; set; }
         public ColumnSet ColumnSet { get; set; }
         public string Username { get; set; }
