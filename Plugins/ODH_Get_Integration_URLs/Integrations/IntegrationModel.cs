@@ -12,6 +12,8 @@ namespace ODH.Integrations.Plugins.Integrations
     /// </summary>
     public class IntegrationModel
     {
+        public IOrganizationService Service { get; set; }
+        public ITracingService TracingService { get; set; }
         public Guid ConfigurationRecordId { get; set; }
         public HttpClient Client { get; set; }
         public Entity TargetEntity { get; set; }

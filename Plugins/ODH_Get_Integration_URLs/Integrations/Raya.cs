@@ -16,14 +16,14 @@ namespace ODH.Integrations.Plugins.Integrations
     /// Author: Ayman Mohamed
     /// Date: 2022-07-04
     /// </summary>
-    public sealed class Raya : Integration
+    public class Raya : Integration
     {
-        public Raya(IOrganizationService service, Entity targetEntity, ITracingService tracingService) : base(targetEntity, tracingService)
+        public Raya(IOrganizationService service, Entity targetEntity, ITracingService tracingService) : base(service, targetEntity, tracingService)
         {
+            
             IntegrationModel.IntegrationName = "raya";
             InitializeIntegrationData(service);
         }
-
 
         public override void Post(IOrganizationService service)
         {

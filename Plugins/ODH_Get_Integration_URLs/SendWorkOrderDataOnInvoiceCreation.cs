@@ -16,15 +16,15 @@ namespace ODH.Integrations.Plugins
         private IOrganizationService _service;
         private IPluginExecutionContext _context;
         private ITracingService _tracingService;
-        private IIntegration integration;
+        private Integration _integration;
 
         public void Execute(IServiceProvider serviceProvider)
         {
             Utility.InitializeFields(serviceProvider, ref _entity, ref _context, ref _service, ref _tracingService);
             if (_entity.LogicalName == "quote")
-                integration = new Raya(_service, _entity, _tracingService);
+                _integration = new Raya(_service, _entity, _tracingService);
             else return;
-            integration.Post(_service);
+            _integration.Post(_service);
         }
     }
 }

@@ -10,15 +10,17 @@ namespace ODH.Integrations.Plugins.Integrations
     /// Author: Ayman Mohamed
     /// Date: 2022-07-04
     /// </summary>
-    public abstract class Integration : IIntegration
+    public abstract class Integration
     {
-        public ITracingService TracingService { get; set; }
+        
         public IntegrationModel IntegrationModel { get; set; }
-        public Integration(Entity targetEntity, ITracingService tracingService)
+        public Integration(IOrganizationService service,Entity targetEntity, ITracingService tracingService)
         {
-            TracingService = tracingService;
+            
             IntegrationModel = new IntegrationModel
             {
+                Service = service,
+                TracingService = tracingService,
                 Client = new HttpClient(),
                 ConfigurationRecordId = new Guid("9449B9BB-96FB-EC11-82E5-000D3ADCA46C"),
                 TargetEntity = targetEntity
@@ -29,7 +31,7 @@ namespace ODH.Integrations.Plugins.Integrations
         {
             var task = new Entity("task");
 
-            task["subject"] = "ODH.Itegrations.Plugins.SendWOrkOrderDataOnInvoiceCreation";
+            task["subject"] = "ODH.Integration.Plugins.SendWOrkOrderDataOnInvoiceCreation";
             task["description"] = $"User Name: {IntegrationModel.Username}.\n" +
                 $"Password: {IntegrationModel.Password}.\n" +
                 $"Base Url: {IntegrationModel.BaseUrl}.\n" +

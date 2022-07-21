@@ -100,7 +100,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Integrations\IIntegration.cs" />
+    <Compile Include="Integrations\CrmIntegrationForInvoiceNumberJuNumber.cs" />
     <Compile Include="Integrations\Integration.cs" />
     <Compile Include="Integrations\IntegrationModel.cs" />
     <Compile Include="SendWorkOrderDataOnInvoiceCreation.cs" />
