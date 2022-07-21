@@ -7,7 +7,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 
-namespace ODH.Integrations.Plugins.Integrations
+namespace ODH.Integrations.Plugins.Integrations.Raya
 {
     /// <summary>
     /// This Is The Concrete Implementation Of the Raya vendor 

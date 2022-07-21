@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xrm.Sdk;
 using ODH.Integrations.Plugins.Helper;
 using ODH.Integrations.Plugins.Integrations;
+using ODH.Integrations.Plugins.Integrations.Raya;
 using System;
 
 namespace ODH.Integrations.Plugins
@@ -21,10 +22,16 @@ namespace ODH.Integrations.Plugins
         public void Execute(IServiceProvider serviceProvider)
         {
             Utility.InitializeFields(serviceProvider, ref _entity, ref _context, ref _service, ref _tracingService);
-            if (_entity.LogicalName == "quote")
-                _integration = new Raya(_service, _entity, _tracingService);
-            else return;
+             _integration = GetIntegration();
+            if (_integration == null) return;
             _integration.Post(_service);
+        }
+
+        public Integration GetIntegration()
+        {
+            if (_entity.LogicalName == "quote")
+                return new Raya(_service, _entity, _tracingService);
+            return null;
         }
     }
 }
